@@ -1,30 +1,47 @@
-# vue-cli-test-2
+# Vue Hiprint Example Project
+hiprint project based on Vue Element-UI
 
-> A Vue.js project
+## Screenshots
 
-## Build Setup
+<img src="https://github.com/peakcool/vue-hiprint-example/blob/master/screenshots/main.png">
 
-``` bash
-# install dependencies
-npm install
+## Getting Started
 
-# serve with hot reload at localhost:8080
-npm run dev
+This project is a starting point for a vue hiprint.
 
-# build for production with minification
-npm run build
+**Step 1**
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+```shell
+> git clone https://github.com/peakcool/vue-hiprint-example.git
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+**Step 2**
+
+```shell
+> cd YOUR_PROJECT/vue-hiprint-example
+```
+
+**Step 3**
+
+```shell
+> npm install
+```
+or
+```shell
+> yarn
+```
+
+**Step 4**
+```shell
+> npm run dev
+```
+
+## Resources
+
+A few resources to get you started:
+
+- [Vue 渐进式JvaScript框架](https://cn.vuejs.org/index.html)
+- [Element-UI](https://element.eleme.cn/#/zh-CN)
+- [hiprint](http://hiprint.io/)
+
+

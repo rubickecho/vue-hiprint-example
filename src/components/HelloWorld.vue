@@ -546,7 +546,7 @@ export default {
 
 			//设置左侧拖拽事件
 			hiprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
-			let _customPrintJson = {};
+			let _customPrintJson = customPrintJson;
 			hiprintTemplate = new hiprint.PrintTemplate({
 				template: _customPrintJson,
 				settingContainer: '#PrintElementOptionSetting',
