@@ -93,6 +93,36 @@
 								<el-button :type="currentPaperType === 'B4' ? 'primary' : 'info'" @click="setPaper('B4')">B4</el-button>
 								<el-button :type="currentPaperType === 'B5' ? 'primary' : 'info'" @click="setPaper('B5')">B5</el-button>
 							</el-button-group>
+							<el-popover
+								placement="bottom"
+								title="请输入自定义纸张宽高"
+								trigger="click">
+								<el-form ref="otherPaperForm" label-position="left" :model="otherPaper" label-width="30px">
+									<el-row>
+										<el-col :span="16">
+											<el-form-item label="宽">
+												<el-input v-model="otherPaper.width">
+													<template slot="append">mm</template>
+												</el-input>
+											</el-form-item>
+										</el-col>
+									</el-row>
+									<el-row>
+										<el-col :span="16">
+											<el-form-item label="高">
+												<el-input v-model="otherPaper.height">
+													<template slot="append">mm</template>
+												</el-input>
+											</el-form-item>
+										</el-col>
+									</el-row>
+									<el-form-item>
+										<el-button type="primary" @click="setPaper('other', otherPaper.width, otherPaper.height)">确定</el-button>
+										<el-button @click="setPaper('other', '', '')">清空</el-button>
+									</el-form-item>
+									</el-form>
+								<el-button slot="reference" :type="currentPaperType === 'other' ? 'primary' : 'info'">自定义纸张</el-button>
+							</el-popover>
 							<el-button-group>
 								<el-button type="info" icon="el-icon-refresh-right" @click="rotatePaper">旋转</el-button>
 								<el-button type="info" icon="el-icon-delete" @click="clearTemplate">清空</el-button>
@@ -306,6 +336,10 @@ export default {
 				width: null,
 				height: null
 			},
+			otherPaper: {
+				width: '',
+				height: ''
+			},
 			dataSources: []
 		}
 	},
@@ -316,16 +350,20 @@ export default {
 		 * @Desc: 处理当前选中纸张
 		 */
 		currentPaperType() {
-			let paper = null;
-			for (const key in this.paperMap) {
-				let item = this.paperMap[key]
-				let { width, height } = this.currentPaper
-				if (item.width === width && item.height === height) {
-					paper = key
+			let type = null;
+			if (this.otherPaper.width !== '' && this.otherPaper.height !== '') {
+				type = 'other'
+			} else {
+				for (const key in this.paperMap) {
+					let item = this.paperMap[key]
+					let { width, height } = this.currentPaper
+					if (item.width === width && item.height === height) {
+						type = key
+					}
 				}
 			}
 
-			return paper
+			return type
 		}
 	},
 	methods: {
@@ -352,11 +390,18 @@ export default {
 		setPaper(type, width, height) {
 			try {
 				if (type === 'other') {
-					hiprintTemplate.setPaper(width, height);
-					this.setCurrentPaper({ width: width, height: height })
+					if (width === '' && height === '') {
+						hiprintTemplate.setPaper('A4', null);
+						this.setCurrentPaper(this.paperMap['A4'])
+						this.otherPaper = {width: '', height: ''}
+					} else {
+						hiprintTemplate.setPaper(width, height);
+						this.setCurrentPaper({ width: width, height: height })
+					}
 				} else {
 					hiprintTemplate.setPaper(type, null);
 					this.setCurrentPaper(this.paperMap[type])
+					this.otherPaper = {width: '', height: ''}
 				}
 			} catch (error) {
 				this.$message({
